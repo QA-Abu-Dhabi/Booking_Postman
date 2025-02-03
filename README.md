@@ -7,6 +7,10 @@
 1. Создать коллекцию Postman и два запроса POST и GET к API.
 2. Настроить pre- и post-request и тестовые скрипты в Postman для генерации firstName и lastName.
 
+## Решение
+Коллекция запросов Postman в [JSON-файле](https://github.com/QA-Abu-Dhabi/Booking_Postman/blob/main/booking.postman_collection.json).  
+Результаты тестирования коллекции в [JSON-файле](https://github.com/QA-Abu-Dhabi/Booking_Postman/blob/main/booking.postman_test_run.json).  
+
 ## 1. Создание POST запроса CreateBooking для создания нового бронирования
 Отправим POST-запрос на URL: https://restful-booker.herokuapp.com/booking.  
 Для генерации случайных значений **firstName** и **lastName** используем следующий pre-request script:
