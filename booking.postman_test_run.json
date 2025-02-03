@@ -1,0 +1,121 @@
+{
+	"id": "e3012d45-b130-4eb2-be26-170e4b5f5f60",
+	"name": "booking",
+	"timestamp": "2025-02-03T05:53:39.321Z",
+	"collection_id": "40728407-34bc8a4a-71aa-4006-924f-e536069ff473",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 4,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-02-03T05:53:36.741Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "feef3234-579f-47c4-8bc2-57f2d792f3d0",
+			"name": "CreateBooking",
+			"url": "https://restful-booker.herokuapp.com/booking",
+			"time": 962,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"request и response совпадают": true
+			},
+			"testPassFailCounts": {
+				"request и response совпадают": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				962
+			],
+			"allTests": [
+				{
+					"request и response совпадают": true
+				}
+			]
+		},
+		{
+			"id": "6a028c1f-1fa1-4f1f-a5b8-4e0f54c4ea22",
+			"name": "GetBooking",
+			"url": "https://restful-booker.herokuapp.com/booking/1280",
+			"time": 192,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"request и response совпадают": true
+			},
+			"testPassFailCounts": {
+				"request и response совпадают": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				192
+			],
+			"allTests": [
+				{
+					"request и response совпадают": true
+				}
+			]
+		},
+		{
+			"id": "bf0edf77-ea2e-4c0f-a5e7-80673d27dfe2",
+			"name": "CreateToken",
+			"url": "https://restful-booker.herokuapp.com/auth",
+			"time": 164,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Статус 200 OK": true,
+				"Токен получен и сохранен": true
+			},
+			"testPassFailCounts": {
+				"Статус 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Токен получен и сохранен": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				164
+			],
+			"allTests": [
+				{
+					"Статус 200 OK": true,
+					"Токен получен и сохранен": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 1318,
+	"collection": {
+		"requests": [
+			{
+				"id": "feef3234-579f-47c4-8bc2-57f2d792f3d0",
+				"method": "POST"
+			},
+			{
+				"id": "6a028c1f-1fa1-4f1f-a5b8-4e0f54c4ea22",
+				"method": "GET"
+			},
+			{
+				"id": "bf0edf77-ea2e-4c0f-a5e7-80673d27dfe2",
+				"method": "POST"
+			}
+		]
+	}
+}
