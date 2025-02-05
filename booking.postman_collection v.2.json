@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "34bc8a4a-71aa-4006-924f-e536069ff473",
+		"name": "booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40728407"
+	},
+	"item": [
+		{
+			"name": "CreateBooking",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'https://restful-booker.herokuapp.com/auth',",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({",
+							"            username: 'admin',",
+							"            password: 'password123'",
+							"        })",
+							"    }",
+							"}, function(err, res) {",
+							"    if (err) {",
+							"        console.error('Ошибка авторизации:', err);",
+							"    } else {",
+							"        pm.globals.set('auth_token', res.json().token);",
+							"        console.log(\"Сохранённый token:\", res.json().token);",
+							"    }",
+							"});",
+							"",
+							"pm.collectionVariables.set('firstname', pm.variables.replaceIn('{{$randomFirstName}}'));",
+							"pm.collectionVariables.set('lastname', pm.variables.replaceIn('{{$randomLastName}}'));",
+							"console.log(\"Сгененрированное имя: \", pm.collectionVariables.get('firstname'));",
+							"console.log(\"Сгененрированная фамилия: \", pm.collectionVariables.get('lastname'));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"",
+							"pm.test(\"Статус 200 OK\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"if (response && response.bookingid) {",
+							"    pm.globals.set(\"bookingid\", response.bookingid);",
+							"    console.log(\"Сохранённый bookingid:\", response.bookingid);",
+							"} else {",
+							"    console. log(\"Ошибка: bookingid не найден в ответе\");",
+							"}",
+							"",
+							"pm.test(\"request и response совпадают\", function () {",
+							"    pm.expect(response.booking.firstname).to.eql(pm.collectionVariables.get(\"firstname\"));",
+							"    pm.expect(response.booking.lastname).to.eql(pm.collectionVariables.get(\"lastname\"));",
+							"    pm.expect(response.booking.totalprice).to.eql(Number(pm.collectionVariables.get(\"totalprice\")));",
+							"    let depositpaidBool = pm.collectionVariables.get(\"depositpaid\");",
+							"    depositpaidBool = depositpaidBool === \"true\";",
+							"    pm.expect(response.booking.depositpaid).to.eql(depositpaidBool);",
+							"    pm.expect(response.booking.bookingdates.checkin).to.eql(pm.collectionVariables.get(\"checkin\"));",
+							"    pm.expect(response.booking.bookingdates.checkout).to.eql(pm.collectionVariables.get(\"checkout\"));",
+							"    pm.expect(response.booking.additionalneeds).to.eql(pm.collectionVariables.get(\"additionalneeds\"));",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"request и response совпадают\", function () {\r",
+							"    pm.expect(response.firstname).to.eql(pm.collectionVariables.get(\"firstname\"));\r",
+							"    pm.expect(response.lastname).to.eql(pm.collectionVariables.get(\"lastname\"));\r",
+							"    pm.expect(response.totalprice).to.eql(Number(pm.collectionVariables.get(\"totalprice\")));\r",
+							"    let depositpaidBool = pm.collectionVariables.get(\"depositpaid\");\r",
+							"    depositpaidBool = depositpaidBool === \"true\";\r",
+							"    pm.expect(response.depositpaid).to.eql(depositpaidBool);\r",
+							"    pm.expect(response.bookingdates.checkin).to.eql(pm.collectionVariables.get(\"checkin\"));\r",
+							"    pm.expect(response.bookingdates.checkout).to.eql(pm.collectionVariables.get(\"checkout\"));\r",
+							"    pm.expect(response.additionalneeds).to.eql(pm.collectionVariables.get(\"additionalneeds\"));\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/{{bookingid}}",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"{{bookingid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "totalprice",
+			"value": "111",
+			"type": "string"
+		},
+		{
+			"key": "depositpaid",
+			"value": "true",
+			"type": "string"
+		},
+		{
+			"key": "checkin",
+			"value": "2025-02-17",
+			"type": "string"
+		},
+		{
+			"key": "checkout",
+			"value": "2025-01-30",
+			"type": "string"
+		},
+		{
+			"key": "additionalneeds",
+			"value": "Breakfast",
+			"type": "string"
+		},
+		{
+			"key": "firstname",
+			"value": ""
+		},
+		{
+			"key": "lastname",
+			"value": ""
+		}
+	]
+}
